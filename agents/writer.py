@@ -3,9 +3,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
 llm = ChatOpenAI(
-    model="openai/gpt-oss-120b",
-    temperature=0.3,
-    max_tokens=400
+    model="openai/gpt-oss-120b"
 )
 
 WRITER_PROMPT = ChatPromptTemplate.from_template(

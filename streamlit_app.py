@@ -9,6 +9,7 @@ from agents.stateSchema import AgentState
 
 
 # ---------------- PAGE CONFIG ----------------
+
 st.set_page_config(
     page_title="Deep Research AI",
     page_icon="🧠",
@@ -16,96 +17,149 @@ st.set_page_config(
 )
 
 
-# ---------------- CUSTOM STYLE ----------------
-st.markdown(
-    """
+# ---------------- CUSTOM CSS ----------------
+
+st.markdown("""
 <style>
 
+/* background */
+
 body {
-    background-color: #0E1117;
+background:#F7F7F5;
 }
 
-.main-title {
-    font-size:40px;
-    font-weight:700;
-    color:#E6E8EF;
+/* center title */
+
+.center-title{
+text-align:center;
+font-size:45px;
+font-weight:600;
+color:#202124;
+margin-top:120px;
+margin-bottom:40px;
+margin-left:-120px;
 }
 
-.subtitle {
-    color:#9CA3AF;
+/* search box */
+
+.stTextArea textarea{
+text-align:center;
+background:white;
+border-radius:22px;
+border:1px solid #E0E0E0;
+box-shadow:0 6px 30px rgba(0,0,0,0.08);
+font-size:16px;
+padding:18px;
 }
 
-.result-card {
-    background:#161B22;
-    padding:20px;
-    border-radius:12px;
-    margin-top:10px;
-    border:1px solid #30363D;
+/* run button */
+
+.stButton>button{
+background:#202124;
+color:white;
+border:none;
+border-radius:22px;
+padding:6px 18px;
+font-size:14px;
+margin-top:15px;
+float:right;
 }
 
-.final-answer {
-    background:linear-gradient(180deg,#141A24,#0E1117);
-    padding:30px;
-    border-radius:14px;
-    border:1px solid #2A3142;
-    font-size:18px;
+/* cards */
+
+.result-card{
+background:white;
+padding:18px;
+border-radius:14px;
+border:1px solid #E0E0E0;
+margin-top:10px;
 }
 
-.stButton>button {
-    background: linear-gradient(90deg,#7C5CFF,#4F8BFF);
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:10px;
-    font-weight:600;
+/* final answer */
+
+.final-answer{
+background:white;
+padding:28px;
+border-radius:16px;
+border:1px solid #E0E0E0;
+font-size:18px;
 }
 
 </style>
-""",
-    unsafe_allow_html=True,
-)
-
-# ---------------- HEADER ----------------
-st.markdown('<div class="main-title">🧠 Deep Research AI</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Autonomous multi-agent research system powered by LangGraph</div>', unsafe_allow_html=True)
-
-st.divider()
-
-# ---------------- INPUT ----------------
-goal = st.text_area(
-    "Research Question",
-    placeholder="Ask a deep research question...",
-    height=120
-)
-
-max_iteration = st.slider(
-    "Max Critic Iterations",
-    1,
-    5,
-    3
-)
-
-run_btn = st.button("Run Deep Research")
+""", unsafe_allow_html=True)
 
 
-# ---------------- AGENT TIMELINE ----------------
+# ---------------- MAIN LAYOUT ----------------
+
+sidebar, main = st.columns([1.3,6])
+
+
+# ---------------- SIDEBAR ----------------
+
+with sidebar:
+
+    st.markdown("### Controls")
+
+    max_iteration = st.slider(
+        "Iterations",
+        1,
+        5,
+        3
+    )
+
+    st.write("")
+    st.write("")
+    st.write("History coming soon...")
+
+
+# ---------------- MAIN PAGE ----------------
+
+with main:
+
+    st.markdown(
+        '<div class="center-title">Deep Research AI</div>',
+        unsafe_allow_html=True
+    )
+
+    col1, col2, col3 = st.columns([2,5,2])
+
+    with col2:
+
+        search_col, button_col = st.columns([9,2])
+
+        with search_col:
+            goal = st.text_area(
+                "",
+                placeholder="Type your research question...",
+                height=110
+            )
+
+        with button_col:
+            st.write("")
+            st.write("")
+            run_btn = st.button("Run")
+
+
+# ---------------- TIMELINE ----------------
+
 timeline = st.empty()
 
 
 # ---------------- RUN AGENT ----------------
+
 if run_btn and goal:
 
     timeline.info("🧠 Planner analyzing research goal...")
-    time.sleep(0.8)
+    time.sleep(0.7)
 
     timeline.info("🔎 Researcher gathering knowledge...")
-    time.sleep(0.8)
+    time.sleep(0.7)
 
     timeline.info("✍️ Writer drafting response...")
-    time.sleep(0.8)
+    time.sleep(0.7)
 
     timeline.info("🧪 Critic evaluating answer...")
-    time.sleep(0.8)
+    time.sleep(0.7)
 
     with st.spinner("Running autonomous research agents..."):
 
@@ -129,6 +183,7 @@ if run_btn and goal:
     st.divider()
 
     # ---------------- FINAL ANSWER ----------------
+
     st.markdown("## Final Answer")
 
     st.markdown(
@@ -138,7 +193,8 @@ if run_btn and goal:
 
     st.caption(f"Iterations used: {result['iteration']} / {result['max_iteration']}")
 
-    # ---------------- OPTIONAL DETAILS ----------------
+    # ---------------- PROCESS ----------------
+
     with st.expander("🔍 View Research Process"):
 
         col1, col2 = st.columns(2)
@@ -179,4 +235,5 @@ if run_btn and goal:
                 )
 
 else:
-    st.info("Enter a research question and click **Run Deep Research**")
+
+    st.info("Enter a research question and click **Run**")

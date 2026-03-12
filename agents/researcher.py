@@ -4,9 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate
 
 
 llm = ChatOpenAI(
-    model="openai/gpt-oss-120b",
-    temperature=0,
-    max_tokens=300
+    model="openai/gpt-oss-120b"
 )
 
 
@@ -17,12 +15,18 @@ You are a research assistant.
 Research the following task carefully and return concise factual notes.
 
 Instructions:
-- Provide concise bullet point notes
 - Focus only on relevant factual information
 - Avoid long paragraphs
 - Do not speculate
 - Do NOT include long explanations or formulas
 - Do not produce a final answer
+
+Output format:
+
+- point 1
+- point 2
+- point 3
+- point 4
 
 Research task:
 {task}
